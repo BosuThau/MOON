@@ -1,0 +1,41 @@
+<head>
+  <style> body { margin: 0; } </style>
+
+  <script src="https://unpkg.com/d3-array@3.0.0/dist/d3-array.min.js></script>
+  <script src="https://unpkg.com/d3-scale@4.0.2/dist/d3-scale.min.js"></script>
+
+  <script src="https://unpkg.com/globe.gl@2.28.2/dist/globe.gl.min.js"></script>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+</head>
+
+<body>
+<div id="globeViz"></div>
+
+<script>
+ 
+
+  const elem = document.getElementById('globeViz');
+  const moon = Globe()
+    .globeImageUrl('https://raw.githubusercontent.com/BosuThau/MOON/main/lunar_surface.jpg')
+    .bumpImageUrl('https://raw.githubusercontent.com/BosuThau/MOON/main/lunar_bumpmap.jpg')
+    .backgroundImageUrl('https://unpkg.com/three-globe@2.27.0/example/img/night-sky.png')
+    .showGraticules(true)
+    .showAtmosphere(false) // moon has no atmosphere
+    .labelText('label')
+    .labelSize(1.7)
+    .labelDotRadius(0.4)
+    .labelDotOrientation(d => labelsTopOrientation.has(d.label) ? 'top' : 'bottom')
+    .labelColor(d => colorScale(d.agency))
+    .labelLabel(d => `
+        <div><b>${d.label}</b></div>
+        <div>${d.agency} - ${d.program} Program</div>
+        <div>Landing on <i>${new Date(d.date).toLocaleDateString()}</i></div>
+      `)
+    .onLabelClick(d => window.open(d.url, '_blank'))
+    (elem);
+
+
+</script>
+</body>
